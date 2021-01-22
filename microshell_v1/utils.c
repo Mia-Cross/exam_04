@@ -17,6 +17,7 @@ int ft_strchr_from(char *str, char c, int start)
     {
         if (str[i] == c)
             return (i);
+        i++;
     }
     return (-1);
 }
@@ -27,7 +28,7 @@ void ft_putstr_fd(int fd, char *str)
 
     i = 0;
     while (str && str[i])
-        write(fd, str[i]++, 1);
+        write(fd, &str[i++], 1);
 }
 
 int ft_strlen(char *str)

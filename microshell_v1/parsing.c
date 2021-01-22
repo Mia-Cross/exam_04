@@ -31,11 +31,12 @@ int get_nb_words(char *str, char c)
     int count;
 
     i = 0;
-    count = 0;
+    count = 1;
     while (str && str[i])
     {
         if (str[i] == c)
             count++;
+        i++;
     }
     return (count);
 }
@@ -48,6 +49,8 @@ char **split_to_char(char *str, char c)
     char **tab;
 
     j = 0;
+    //write(1, "split->", 7);
+    //write(1, &c, 1);
     if (!(tab = (char **)malloc(sizeof(char *) * (get_nb_words(str, c) + 1))))
         return (NULL);
     while (str && *str)
@@ -69,10 +72,10 @@ char **split_to_char(char *str, char c)
 
 void remove_quotes(char **line)
 {
-    int nb;
+  //  int nb;
     int occur;
 
-    nb = 0;
+ //   nb = 0;
     occur = 0;
     // while ( (occur = ft_strchr_from(*line, '"', occur)) >= 0 )
     //     nb++;
@@ -80,6 +83,7 @@ void remove_quotes(char **line)
     //     exit (1);
     while ( (occur = ft_strchr_from(*line, '"', 0)) >= 0 )
     {
+        //write(1, "yo", 2);
         while (*line && *line[occur + 1])
         {
             *line[occur] = *line[occur + 1];
