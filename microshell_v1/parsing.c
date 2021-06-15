@@ -44,11 +44,13 @@ int get_nb_words(char *str, char c)
 
 char **split_to_char(char *str, char c)
 {
-    int i;
+    // int i;
     int j;
     // int i_max;
     int j_max;
-    int len;
+    // int len;
+    int next = 0;
+    int prev = 0;
     char **tab;
 
     j = 0;
@@ -58,18 +60,23 @@ char **split_to_char(char *str, char c)
         return (NULL);
     while (str && *str && j < j_max)
     {
-        len = 0;
-        while (str[len] && str[len] == c)
-            str++;
-        while (str[len] && str[len] != c && is_separator(str, len))
-            len++;
-        if (!(tab[j] = (char *)malloc(sizeof(char) * (len + 1))))
+        next = next_separator(str, ++prev);
+        // len = 0;
+        // while (str[len] && str[len] == c)
+        //     str++;
+        // while (str[len] && str[len] != c && is_separator(str, len))
+        //     len++;
+        // if (!(tab[j] = (char *)malloc(sizeof(char) * (len + 1))))
+        if (!(tab[j] = (char *)malloc(sizeof(char) * (next - prev + 2))))
             return (NULL);
-        i = 0;
-        while (i < len)
-            tab[j][i++] = *str++;
-        tab[j][len] = 0;
+        // i = 0;
+        // while (i < len)
+        //     tab[j][i++] = *str++;
+        while (++prev < next)
+            tab[j][prev] = *str++;
+        tab[j][prev] = 0;
         j++;
+        prev = next;
         printf("just stored = %s\n", tab[j - 1]);
     }
     tab[j] = NULL;

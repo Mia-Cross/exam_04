@@ -21,10 +21,11 @@ int is_separator(char *str, int index)
     return (0);
 }
 
-int next_separator()
+int next_separator(char *str, int index)
 {
-    while (is_separator())
-    return (index du separteur)
+    while (str && str[index] && !is_separator(str, index))
+        index++;
+    return (index);
 }
 
 int ft_strchr_from(char *str, char c, int start)

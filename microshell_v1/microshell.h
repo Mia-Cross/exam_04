@@ -19,6 +19,7 @@ int ft_strchr_from(char *str, char c, int start);
 void print_error_and_exit(char *str);
 void remove_quotes(char **line);
 int is_separator(char *str, int index);
+int next_separator(char *str, int index);
 
 // int		exec_child_pipe(int pipefd[2], int *fd, int i)
 // {
