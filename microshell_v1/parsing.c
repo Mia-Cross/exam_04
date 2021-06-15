@@ -22,6 +22,7 @@ char *tab_to_str(char **tab, int nb_line)
         while (tab[i] && tab[i][j])
             str[len++] = tab[i][j++];
     }
+    // printf("-->> LINE : \"%s\"\n", str);
     return (str);
 }
 
@@ -34,7 +35,7 @@ int get_nb_words(char *str, char c)
     count = 1;
     while (str && str[i])
     {
-        if (str[i] == c)
+        if (str[i] == c && is_separator(str, i))
             count++;
         i++;
     }
@@ -45,18 +46,22 @@ char **split_to_char(char *str, char c)
 {
     int i;
     int j;
+    // int i_max;
+    int j_max;
     int len;
     char **tab;
 
     j = 0;
-    //write(1, "split->", 7);
-    //write(1, &c, 1);
-    if (!(tab = (char **)malloc(sizeof(char *) * (get_nb_words(str, c) + 1))))
+    j_max =  get_nb_words(str, c);
+    printf("FOR \'%c\', count = %d\n", c,j_max);
+    if (!(tab = (char **)malloc(sizeof(char *) * (j_max + 1))))
         return (NULL);
-    while (str && *str)
+    while (str && *str && j < j_max)
     {
         len = 0;
-        while (str && str[len] && str[len] != c)
+        while (str[len] && str[len] == c)
+            str++;
+        while (str[len] && str[len] != c && is_separator(str, len))
             len++;
         if (!(tab[j] = (char *)malloc(sizeof(char) * (len + 1))))
             return (NULL);
@@ -65,6 +70,7 @@ char **split_to_char(char *str, char c)
             tab[j][i++] = *str++;
         tab[j][len] = 0;
         j++;
+        printf("just stored = %s\n", tab[j - 1]);
     }
     tab[j] = NULL;
     return (tab);
