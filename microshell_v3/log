@@ -1,0 +1,15 @@
+cmd
+	pipe
+		/usr/bin/echo
+
+----
+cmd
+	pipe
+		/usr/bin/echo
+
+----
+cmd
+	pipe
+		/usr/bin/echo
+
+----

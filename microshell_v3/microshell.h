@@ -11,15 +11,19 @@
 #define RD_END 0
 #define WR_END 1
 
-char *tab_to_str(char **tab, int nb_line);
+// char *tab_to_str(char **tab, int nb_line);
 char **split_to_char(char *str, char c);
+int ft_tablen(char **tab);
 int ft_strlen(char *str);
+char **sub_str_tab(char **av, int begin, int end);
+int next_occur(char *c, char **tab, int index);
 void ft_putstr_fd(int fd, char *str);
-int ft_strchr_from(char *str, char c, int start);
+// int ft_strchr_from(char *str, char c, int start);
+int nb_segments(char **av, char *str);
 void print_error_and_exit(char *str);
-void remove_quotes(char **line);
-int is_separator(char *str, int index);
-int next_separator(char *str, int index);
+// void remove_quotes(char **line);
+// int is_separator(char *str, int index);
+// int next_separator(char *str, int index);
 
 // int		exec_child_pipe(int pipefd[2], int *fd, int i)
 // {

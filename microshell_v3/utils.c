@@ -1,47 +1,27 @@
 # include "microshell.h"
 
-void print_error_and_exit(char *str)
-{
-    ft_putstr_fd(2, str);
-    exit (1);
-}
-
-int is_separator(char *str, int index)
-{
-    int i = 0;
-    int nb_quotes = 0;
-
-    while (str && str[i] && i < index)
-    {
-        if (str[i++] == '\"')
-            nb_quotes++;
-    }
-    if (nb_quotes % 2)
-        return (1);
-    return (0);
-}
-
-int next_separator(char *str, int index)
-{
-    while (str && str[index] && !is_separator(str, index))
-        index++;
-    return (index);
-}
-
-int ft_strchr_from(char *str, char c, int start)
+int ft_strlen(char *str)
 {
     int i;
 
-    if (start < 0 && start > ft_strlen(str))
-        return (-1);
-    i = start;
+    i = 0;
     while (str && str[i])
-    {
-        if (str[i] == c)
-            return (i);
         i++;
-    }
-    return (-1);
+    return (i);
+}
+
+int ft_tablen(char **tab)
+{
+    int i = 0;
+    while (tab && tab[i])
+        i++;
+    return i;
+}
+
+void print_error_and_exit(char *str)
+{
+    write(2, str, ft_strlen(str));
+    exit (1);
 }
 
 void ft_putstr_fd(int fd, char *str)
@@ -53,13 +33,15 @@ void ft_putstr_fd(int fd, char *str)
         write(fd, &str[i++], 1);
 }
 
-int ft_strlen(char *str)
+int nb_segments(char **av, char *str)
 {
-    int i;
+    int count = 1;
 
-    i = 0;
-    while (str && str[i])
-        i++;
-    return (i);
+    for (int i = 0; av[i]; i++)
+    {
+        if (!strcmp(av[i], str))
+            count++;
+    }
+    return (count) ;
 }
 
