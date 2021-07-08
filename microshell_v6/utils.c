@@ -19,6 +19,8 @@ int nb_segments(char *c, char **tab)
 {
     int i = 0;
     int count = 1;
+    if (!tab || !tab[0])   // very important to avoid segfaults
+        return 0;
     while (tab && tab[i + 1])
     {
         if (!strcmp(c, tab[i++]))

@@ -58,29 +58,29 @@ int main(int ac, char **av, char **env)
     char **cmds;
     char **pipes;
     int fd = 0;
-    int last_cmd = 1;
-    int last_pipe = 0;
+    int last_cmd = 0;    // these need to be initialized to the previous position
+    int last_pipe = -1;  // same here
 
     if (ac < 2)
         return (1);
     for (int i = 0; i < nb_segments(";", av); i++)
     {
-        cmds = sub_tab(av, last_cmd, next_occur(";", av, last_cmd));
-        last_pipe = 0;
+        cmds = sub_tab(av, last_cmd + 1, next_occur(";", av, last_cmd + 1));  // always send last_... + 1 to next_occur !
+        last_pipe = -1;   // same here
         for (int j = 0; j < nb_segments("|", cmds); j++)
         {
-            pipes = sub_tab(cmds, last_pipe, next_occur("|", cmds, last_pipe));
+            pipes = sub_tab(cmds, last_pipe + 1, next_occur("|", cmds, last_pipe + 1)); // always send last_... + 1 to next_occur !
             if (j + 1 < nb_segments("|", cmds))
                 execute_pipe(pipes, env, &fd, 0);
             else
                 execute_pipe(pipes, env, &fd, 1);
             free(pipes);
             pipes = NULL;
-            last_pipe = next_occur("|", cmds, last_pipe + 1) + 1;
+            last_pipe = next_occur("|", cmds, last_pipe + 1);  // do NOT add + 1 to next_occur's result !
         }
         free(cmds);
         cmds = NULL;
-        last_cmd = next_occur(";", av, last_cmd + 1) + 1;
+        last_cmd = next_occur(";", av, last_cmd + 1); // do NOT add + 1 to next_occur's result !
     }
     return (0);
 }
